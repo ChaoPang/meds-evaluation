@@ -17,7 +17,7 @@ import numpy as np
 import polars as pl
 from numpy.typing import ArrayLike
 from sklearn.calibration import calibration_curve
-from sklearn.metrics import accuracy_score, average_precision_score, brier_score_loss, f1_score, roc_auc_score
+from sklearn.metrics import accuracy_score, average_precision_score, brier_score_loss, f1_score, roc_auc_score, precision_recall_curve, auc
 
 from meds_evaluation.schema import (
     BOOLEAN_VALUE_FIELD,
@@ -172,6 +172,9 @@ def _get_binary_classification_metrics(
     if predicted_probabilities is not None and len(np.unique(true_values)) > 1:
         results["roc_auc_score"] = roc_auc_score(true_values, predicted_probabilities)
         results["average_precision_score"] = average_precision_score(true_values, predicted_probabilities)
+
+        precision, recall, _ = precision_recall_curve(true_values, predicted_probabilities)
+        results["pr_auc_score"] = auc(recall, precision)
 
         c = calibration_curve(true_values, predicted_probabilities, n_bins=10)
         results["calibration_error"] = np.abs(c[0] - c[1]).mean()
