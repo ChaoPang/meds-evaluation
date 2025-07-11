@@ -7,6 +7,7 @@ predictions_path: ???
 output_dir: ???
 samples_per_subject: 4
 resampling_seed: 0
+num_bootstrapping: 1000
 
 hydra:
   output_subdir: null

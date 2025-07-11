@@ -82,7 +82,8 @@ def evaluate_bootstrapped_binary_classification(
         metric_values = [boot_res[bi][metric] for bi in range(bootstrapping) if metric in boot_res[bi]]
         results["mean_" + metric] = np.mean(metric_values)
         results["std_" + metric] = np.std(metric_values)
-
+        results["ci_lower_" + metric] = np.percentile(metric_values, 2.5)
+        results["ci_upper_" + metric] = np.percentile(metric_values, 97.5)
     return results
 
 

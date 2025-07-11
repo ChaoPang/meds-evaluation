@@ -48,6 +48,7 @@ def main(cfg: DictConfig) -> None:
     logger.info("Running evaluation...")
     result = evaluate_bootstrapped_binary_classification(
         predictions,
+        bootstrapping=cfg.num_bootstrapping,
     )
 
     # Save the results
